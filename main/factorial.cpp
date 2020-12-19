@@ -17,6 +17,12 @@ int main()
     std::cin.clear();
     std::cin.ignore(INT_MAX, '\n');
 
+    // measure time
+    debug::db_timer timer;
+
+    // stop measuring time
+    timer.end();
+
     return 0;
 }
 
