@@ -8,6 +8,8 @@ mpz_class calculate(int start, int number, uint cores);
 
 const auto core_count = std::thread::hardware_concurrency();
 
+
+// main method
 int main()
 {
     int number;
