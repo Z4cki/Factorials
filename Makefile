@@ -1,8 +1,9 @@
-factorial: factorial.o
-	g++ factorial.o -o bin/factorial
+bin/factorial: bin/factorial.o
+	g++ bin/factorial.o -o bin/factorial -pthread -lgmp -lgmpxx -std=c++17
 
-factorial.o: factorial.cpp measure_time.h
-	g++ factorial.cpp -c -pthread -lgmp -lgmpxx -std=c++17
+bin/factorial.o: src/factorial.cpp src/measure_time.h
+	mkdir -p bin
+	g++ -c src/factorial.cpp -o bin/factorial.o
 
 clean:
-	rm *.o
+	rm bin/*.o
