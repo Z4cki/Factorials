@@ -1,6 +1,4 @@
-#pragma once
-
-#include <iostream>
+#include <cstdio>
 #include <chrono>
 
 namespace debug 
@@ -22,7 +20,7 @@ namespace debug
             {
                 auto end_time = clock::now();
                 auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
-                std::cout << measured_time / 1000000.0F << " ms" << std::endl;
+                printf("%f ms\n", measured_time / 1000000.0F);
             }
     };
 }
