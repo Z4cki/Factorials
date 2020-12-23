@@ -9,7 +9,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${workspaceFolder}/bin",
+                "${workspaceFolder}/bin/${fileBasenameNoExtension}",
                 "-pthread",
                 "-lgmp",
                 "-lgmpxx"
