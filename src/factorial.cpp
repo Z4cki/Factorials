@@ -1,10 +1,14 @@
-#include <iostream>
+#include <chrono>
 #include <future>
+#include <iostream>
 
 #include <gmpxx.h>
 #include "measure_time.h"
 
 mpz_class Calculate(int start, int number, uint cores);
+
+template<typename T>
+bool IsFutureFinished(std::future<T> const& f);
 
 const auto core_count_ = std::thread::hardware_concurrency();
 
@@ -28,9 +32,18 @@ int main()
     }
 
     mpz_class result = 1;
-    for (int i = 0; i < core_count_; i++)
-    {   
-        result *= futures[i].get();
+    {
+        int i = 0;
+        while (i < core_count_)
+        {   
+            for (int j = 0; j < core_count_; j++)
+            {
+                if(IsFutureFinished(futures[j]))
+                    result *= futures[j].get();
+                    futures[j] = {};
+                    i++;
+            }
+        }
     }
 
     //stop measuring time
@@ -73,4 +86,11 @@ mpz_class Calculate(int start, int number, uint cores)
 
     timer.end(debug_msg);
     return n;
+}
+
+template<typename T>
+bool IsFutureFinished(std::future<T> const& f)
+{
+    if (!f.valid()) return false;
+    return f.wait_for(std::chrono::seconds(0)) == std::future_status::ready;
 }
