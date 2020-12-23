@@ -4,9 +4,9 @@
 #include <gmpxx.h>
 #include "measure_time.h"
 
-mpz_class calculate(int start, int number, uint cores);
+mpz_class Calculate(int start, int number, uint cores);
 
-const auto core_count = std::thread::hardware_concurrency();
+const auto core_count_ = std::thread::hardware_concurrency();
 
 int main()
 {
@@ -20,23 +20,24 @@ int main()
     // measure time
     debug::db_timer timer;
 
-    std::future<mpz_class> futures[core_count];
+    std::future<mpz_class> futures[core_count_];
 
-    for (int i = 0; i < core_count; i++)
+    for (int i = 0; i < core_count_; i++)
     {
-        futures[i] = std::async(std::launch::async, calculate, i + 2, number, core_count);
+        futures[i] = std::async(std::launch::async, Calculate, i + 2, number, core_count_);
     }
 
     mpz_class result = 1;
-    for (int i = 0; i < core_count; i++)
+    for (int i = 0; i < core_count_; i++)
     {
-        result *= futures[i].get();
+        mpz_class forked = futures[i].get();
+        result *= forked;
     }
 
-    // stop measuring time
+    //stop measuring time
     timer.end();
 
-    gmp_printf("%Zd\n", result);
+    //gmp_printf("%Zd\n", result);
 
     return 0;
 }
@@ -61,12 +62,16 @@ int main()
  *  @param cores    The count of cores used to caclulate a result. Here to count up 
  *                  in the for()-loop to even out the load on the cores.
  */
-mpz_class calculate(int start, int number, uint cores)
+mpz_class Calculate(int start, int number, uint cores)
 {
+    const char* debug_msg = "Thread finished in";
+    debug::db_timer timer;
     mpz_class n = 1;
     for (int i = start; i <= number; i+=cores)
     {
         n *= i;
     }
+
+    timer.end(debug_msg);
     return n;
 }

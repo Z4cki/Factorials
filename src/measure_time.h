@@ -22,5 +22,12 @@ namespace debug
                 auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
                 printf("%f ms\n", measured_time / 1000000.0F);
             }
+
+            void end(const char* msg)
+            {
+                auto end_time = clock::now();
+                auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
+                printf("%s %f ms\n", msg, measured_time / 1000000.0F);
+            }
     };
 }
