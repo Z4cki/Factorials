@@ -20,8 +20,23 @@ int main()
     // measure time
     debug::db_timer timer;
 
+    std::future<mpz_class> futures[4];
+
+    for (int i = 0; i < 4; i++)
+    {
+        futures[i] = std::async(std::launch::async, calculate, i + 2, number, core_count);
+    }
+
+    mpz_class result = 1;
+    for (int i = 0; i < 4; i++)
+    {
+        result *= futures[i].get();
+    }
+
     // stop measuring time
     timer.end();
+
+    gmp_printf("%Zd\n", result);
 
     return 0;
 }
