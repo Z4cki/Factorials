@@ -4,7 +4,7 @@ Runs stable up to 100,000,000 for now.
 
 
 ### Build 
-Requires GMP [GNU Multiple Precision Library](https://gmplib.org/ "GMP Homepage")
+Requires GMP [GNU Multiple Precision Library](https://gmplib.org/ "GMP Homepage")  
 Make sure to configure GMP for C++ using 
 - "./configure --enable-cxx"
 .
