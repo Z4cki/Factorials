@@ -10,6 +10,8 @@ clean:
 	@echo cleanup succesfull
 
 delete-bin:
-	@if [ -f bin/*.* ] ; then rm bin/* ; fi
-	@if [ -d bin/ ]  ; then rmdir bin/ ; fi
+	@if [ -d bin/ ]  ; then rm -r bin/ ; fi
 	@echo removed all binaries
+
+run:
+	@cd bin/ ; ./factorial;
