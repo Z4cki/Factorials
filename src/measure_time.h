@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <string>
 
 namespace debug 
 {
@@ -19,15 +20,17 @@ namespace debug
             void end()
             {
                 auto end_time = clock::now();
-                auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
-                std::cout << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
+                uint64_t measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
+                if (measured_time > 999999999) std::cout << measured_time / 1000000.0F << " ms ("  << measured_time / 1000000000.0F << " s)" << std::endl;
+                else std::cout << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
             }
 
             void end(const char* msg)
             {
                 auto end_time = clock::now();
-                auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
-                std::cout << msg << " " << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
+                uint64_t measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
+                if (measured_time > 999999999) std::cout << msg << " " << measured_time / 1000000.0F << " ms ("  << measured_time / 1000000000.0F << " s)" << std::endl;
+                else std::cout << msg << " " << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
             }
     };
 }

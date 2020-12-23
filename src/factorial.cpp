@@ -1,6 +1,7 @@
 #include <chrono>
 #include <future>
 #include <iostream>
+#include <thread>
 
 #include <gmpxx.h>
 #include "measure_time.h"
@@ -10,12 +11,12 @@ mpz_class Calculate(int start, int number, uint cores);
 template<typename T>
 bool IsFutureFinished(std::future<T> const& f);
 
-const auto core_count_ = std::thread::hardware_concurrency();
+const uint core_count = std::thread::hardware_concurrency();
 
 int main()
 {
     int number;
-    std::cout << "Enter number : " << std::endl;
+    std::cout << "Enter number: ";
 
     std::cin >> number;
     std::cin.clear();
@@ -24,19 +25,22 @@ int main()
     // measure time
     debug::db_timer timer;
 
-    std::future<mpz_class> futures[core_count_];
+    std::future<mpz_class> futures[core_count];
 
-    for (int i = 0; i < core_count_; i++)
+    for (int i = 0; i < core_count; i++)
     {
-        futures[i] = std::async(std::launch::async, Calculate, i + 2, number, core_count_);
+        futures[i] = std::async(std::launch::async, Calculate, i + 2, number, core_count);
     }
 
+    // collect all futures
+    // not "blocking" the main thread by checking which future 
+    // finished and doing work with them
     mpz_class result = 1;
     {
         int i = 0;
-        while (i < core_count_)
+        while (i < core_count)
         {   
-            for (int j = 0; j < core_count_; j++)
+            for (int j = 0; j < core_count; j++)
             {
                 if(IsFutureFinished(futures[j]))
                     result *= futures[j].get();
@@ -76,14 +80,13 @@ int main()
  */
 mpz_class Calculate(int start, int number, uint cores)
 {
-    const char* debug_msg = "Thread finished in";
+    const char* debug_msg = "Thread finished";
     debug::db_timer timer;
     mpz_class n = 1;
     for (int i = start; i <= number; i+=cores)
     {
         n *= i;
     }
-
     timer.end(debug_msg);
     return n;
 }

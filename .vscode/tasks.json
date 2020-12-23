@@ -12,7 +12,8 @@
                 "${workspaceFolder}/bin/${fileBasenameNoExtension}",
                 "-pthread",
                 "-lgmp",
-                "-lgmpxx"
+                "-lgmpxx",
+                "-std=c++17"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
