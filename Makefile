@@ -12,4 +12,4 @@ clean:
 delete-bin:
 	@if [ -f bin/*.* ] ; then rm bin/* ; fi
 	@if [ -d bin/ ]  ; then rmdir bin/ ; fi
-	@echo cleanup succesfull
+	@echo removed all binaries
