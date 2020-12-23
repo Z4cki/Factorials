@@ -12,6 +12,7 @@ template<typename T>
 bool IsFutureFinished(std::future<T> const& f);
 
 const uint core_count = std::thread::hardware_concurrency();
+const char* debug_msg = "Thread finished";
 
 int main()
 {
@@ -80,13 +81,9 @@ int main()
  */
 mpz_class Calculate(int start, int number, uint cores)
 {
-    const char* debug_msg = "Thread finished";
     debug::db_timer timer;
     mpz_class n = 1;
-    for (int i = start; i <= number; i+=cores)
-    {
-        n *= i;
-    }
+    for (int i = start; i <= number; i+=cores) n *= i;
     timer.end(debug_msg);
     return n;
 }
