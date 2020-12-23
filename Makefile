@@ -1,8 +1,8 @@
-output: main.o
-	g++ main.o -o bin/main
+factorial: factorial.o
+	g++ factorial.o -o bin/factorial
 
-main.o: main.cpp measure_time.h
-	g++ main.cpp -c -pthread -lgmp -lgmpxx -std=c++17
+factorial.o: factorial.cpp measure_time.h
+	g++ factorial.cpp -c -pthread -lgmp -lgmpxx -std=c++17
 
 clean:
 	rm *.o
