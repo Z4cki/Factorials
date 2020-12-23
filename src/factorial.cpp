@@ -20,15 +20,15 @@ int main()
     // measure time
     debug::db_timer timer;
 
-    std::future<mpz_class> futures[4];
+    std::future<mpz_class> futures[core_count];
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < core_count; i++)
     {
         futures[i] = std::async(std::launch::async, calculate, i + 2, number, core_count);
     }
 
     mpz_class result = 1;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < core_count; i++)
     {
         result *= futures[i].get();
     }
