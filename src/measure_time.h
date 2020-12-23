@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <chrono>
+#include <iostream>
 
 namespace debug 
 {
@@ -20,14 +20,14 @@ namespace debug
             {
                 auto end_time = clock::now();
                 auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
-                printf("%f ms\n", measured_time / 1000000.0F);
+                std::cout << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
             }
 
             void end(const char* msg)
             {
                 auto end_time = clock::now();
                 auto measured_time = end_time.time_since_epoch().count() - start_time.time_since_epoch().count();
-                printf("%s %f ms\n", msg, measured_time / 1000000.0F);
+                std::cout << msg << " " << measured_time / 1000.0F << " \xC2\xB5s ("  << measured_time / 1000000.0F << " ms)" << std::endl;
             }
     };
 }
