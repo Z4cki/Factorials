@@ -6,12 +6,12 @@ Runs stable up to 100,000,000 for now.
 ### Build 
 Requires GMP [GNU Multiple Precision Library](https://gmplib.org/ "GMP Homepage").  
 Make sure to configure GMP for C++ using 
-- "./configure --enable-cxx"
+- ```"./configure --enable-cxx"```
 .
 
 #### Build command:
 
 Run (in src/)
-- g++ factorial.cpp -o factorial -pthread -lgmp -lgmpxx -std=c++17+
+- ```g++ factorial.cpp -o factorial -pthread -lgmp -lgmpxx -std=c++17+```
 
-- or run the build.sh script (note: output is in bin/).
+- ```or run the build.sh script (note: output is in bin/).```
