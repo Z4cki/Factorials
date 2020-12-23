@@ -15,7 +15,7 @@ You can either run:
 
 - ```./build.sh```
 
-- ```make``` (and additional ```make clean``` to remove any object files)
+- ```make``` (and optional ```make clean``` to remove any object files)
 
 - ```mkdir -p bin && g++ src/factorial.cpp -o bin/factorial -pthread -lgmp -lgmpxx -std=c++17```
 
