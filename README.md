@@ -11,7 +11,10 @@ Make sure to configure GMP for C++ using
 
 #### Build command:
 
-Run (in src/)
-- ```g++ factorial.cpp -o factorial -pthread -lgmp -lgmpxx -std=c++17+```
+You can either run:
 
-- ```or run the build.sh script (note: output is in bin/).```
+- ```./build.sh```
+
+- ```make```
+
+- ```mkdir -p bin && g++ src/factorial.cpp -o bin/factorial -pthread -lgmp -lgmpxx -std=c++17```
