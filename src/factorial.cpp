@@ -29,9 +29,8 @@ int main()
 
     mpz_class result = 1;
     for (int i = 0; i < core_count_; i++)
-    {
-        mpz_class forked = futures[i].get();
-        result *= forked;
+    {   
+        result *= futures[i].get();
     }
 
     //stop measuring time
