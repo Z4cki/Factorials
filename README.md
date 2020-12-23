@@ -1,5 +1,5 @@
 # Factorials
-Calculate factorials of large numbers
+Calculate factorials of large numbers  
 Runs stable up to 100,000,000 for now
 
 
