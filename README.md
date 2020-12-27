@@ -13,7 +13,7 @@ Make sure to configure GMP for C++ using
 
 You can either run:
 
-- ```./build.sh```
+- ~~```./build.sh```~~
 
 - ```make``` (and optional ```make clean``` to remove any object files)
 
