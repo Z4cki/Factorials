@@ -5,7 +5,7 @@
 #include <gmpxx.h>
 #include "measure_time.h"
 
-#if defined(__MINGW32__)
+#ifdef __MINGW32__
 typedef unsigned int uint;
 #endif
 

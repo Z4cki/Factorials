@@ -1,5 +1,5 @@
 CPP=g++
-WINCPP=x86_64-w64-mingw32-g++
+WINCPP=x86_64-w64-mingw32-g++-posix
 CFLAGS=-lpthread -lgmp -lgmpxx -std=c++17
 WINFLAGS=-I/usr/local/include -L/usr/local/lib
 
@@ -18,12 +18,12 @@ bin/factorial.o: src/factorial.cpp src/measure_time.h
 	$(CPP) -c src/factorial.cpp -o bin/factorial.o
 
 bin/factorial.exe: bin/factorial.win.o
-	$(WINCPP) bin/factorial.win.o -o bin/factorial.exe $(WINFLAGS) $(CFLAGS)
+	$(WINCPP) $(WINFLAGS) bin/factorial.win.o -o bin/factorial.exe $(CFLAGS)
 
 bin/factorial.win.o: src/factorial.cpp src/measure_time.h
 	@if [ ! -d bin/ ] ; then mkdir bin && echo "created folder bin" ; fi
-	$(WINCPP) src/factorial.cpp -o bin/factorial.win.o $(WINFLAGS) 
-
+	$(WINCPP) $(WINFLAGS) src/factorial.cpp -o bin/factorial.win.o $(CFLAGS)
+	
 clean:
 	@if [ -f bin/*.o ] ; then rm bin/*.o ; fi
 	@echo cleanup succesfull
