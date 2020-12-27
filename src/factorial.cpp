@@ -1,10 +1,13 @@
 #include <chrono>
 #include <future>
 #include <iostream>
-#include <thread>
 
 #include <gmpxx.h>
 #include "measure_time.h"
+
+#if defined(__MINGW32__)
+typedef unsigned int uint;
+#endif
 
 mpz_class Calculate(int start, int number, uint cores);
 
