@@ -1,7 +1,7 @@
 CPP=g++
 WINCPP=x86_64-w64-mingw32-g++-posix
 CFLAGS=-lpthread -lgmp -lgmpxx -std=c++17
-WINFLAGS=-static -static-libgcc -static-libstdc++ -I/usr/local/mingw32/include -L/usr/local/mingw32/lib
+WINFLAGS=-static -I/usr/local/mingw32/include -L/usr/local/mingw32/lib
 
 all: factorial  #factorial.exe
 
