@@ -1,99 +1,91 @@
-#include <chrono>
+#include<iostream>
 #include <future>
-#include <iostream>
+#include <thread>
 
 #include <gmpxx.h>
 #include "measure_time.h"
 
-#ifdef __MINGW32__
-typedef unsigned int uint;
+#ifndef THREADS_COUNT_DEFINED
+#define THREADS_COUNT_DEFINED
+int iKerne = std::thread::hardware_concurrency();
+int threads = 512; //1024; //2048; //4096; // 8192; //16128;
 #endif
 
-mpz_class Calculate(int start, int number, uint cores);
-
-template<typename T>
-bool IsFutureFinished(std::future<T> const& f);
-
-const uint core_count = std::thread::hardware_concurrency();
-const char* debug_msg = "Thread finished";
+void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end);
+void Factorial(int number);
+void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b);
 
 int main()
 {
-    int number;
-    std::cout << "Enter number: ";
-
-    std::cin >> number;
-    std::cin.clear();
-    std::cin.ignore(INT_MAX, '\n');
-
-    // measure time
-    debug::db_timer timer;
-
-    std::future<mpz_class> futures[core_count];
-
-    for (int i = 0; i < core_count; i++)
-    {
-        futures[i] = std::async(std::launch::async, Calculate, i + 2, number, core_count);
-    }
-
-    // collect all futures
-    // not "blocking" the main thread by checking which future 
-    // finished and doing work with them
-    mpz_class result = 1;
-    {
-        int i = 0;
-        while (i < core_count)
-        {   
-            for (int j = 0; j < core_count; j++)
-            {
-                if(IsFutureFinished(futures[j]))
-                    result *= futures[j].get();
-                    futures[j] = {};
-                    i++;
-            }
-        }
-    }
-
-    //stop measuring time
-    timer.end();
-
-    //gmp_printf("%Zd\n", result);
-
-    return 0;
+	int number = 1000000;
+	Factorial(number);
+	
 }
 
-/**
- *  Function to multiply numbers starting with start, in steps of "cores".
- *  We split up the calculation onto different processing cores and 
- *  count upwards the same steps, but with different starting points to not 
- *  multiply any numbers twice.
- * 
- *  for example: (with 2 cores)
- * 
- *  Core 1: 1 * 3 * 5 * 7 ... <= number 
- *  Core 2:   2 * 4 * 6 * ... <= number
- *  .
- *  .
- *  .
- * 
- *  @param start    To split the calculation in different parts we start with
- *                  numbers on different cores.
- *  @param number   Number entered by user to calculate the factorial for.
- *  @param cores    The count of cores used to caclulate a result. Here to count up 
- *                  in the for()-loop to even out the load on the cores.
- */
-mpz_class Calculate(int start, int number, uint cores)
+void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end)
 {
     debug::db_timer timer;
-    mpz_class n = 1;
-    for (int i = start; i <= number; i+=cores) n *= i;
-    timer.end(debug_msg);
-    return n;
+	mpz_class a = 1;
+	for (int i = start; i <= end; i += threads) a *= i;
+	mpzPromise.set_value(a);
+    timer.end("Finished split thread");
 }
 
-template<typename T>
-bool IsFutureFinished(std::future<T> const& f)
+void Factorial(int number)
 {
-    if (!f.valid()) return false;
-    return f.wait_for(std::chrono::seconds(0)) == std::future_status::ready;
+	switch (number)
+	{
+		case 100000: 
+		{
+			threads = 64;
+			break;
+		}
+		case 1000000: 
+		{
+			threads = 512;
+			break;
+		}
+		case 10000000: 
+		{
+			threads = 4096;
+			break;
+		}
+		case 100000000: 
+		{
+			threads = 8192;
+			break;
+		}
+		default: 
+		{
+			threads = 16000;
+			break;
+		}
+	}
+
+	std::promise<mpz_class> factPromise[threads * 2 - 1];
+	std::future<mpz_class>  factFuture[threads * 2 - 1];
+		
+	std::thread factThread[threads * 2];
+	for (int i = 0; i < threads; i++)
+	{
+		factFuture[i] = factPromise[i].get_future();
+		factThread[i] = std::thread(CalculateFactorial, std::move(factPromise[i]), i + 1, number);
+	}
+	
+	int j = 0;
+	for (int i = threads; i < threads * 2 - 1 ; i++)
+	{
+		factFuture[i] = factPromise[i].get_future();
+	    factThread[i] = std::thread(MergeResult, std::move(factPromise[i]), factFuture[j].get(), factFuture[j+1].get());
+		j+=2;
+ 	}
+
+    gmp_printf("%Zd", factFuture[threads * 2 - 2]);
+	
+	for (auto &t : factThread) t.join();
+}
+
+void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b) 
+{
+	mpzPromise.set_value(a*b);
 }
