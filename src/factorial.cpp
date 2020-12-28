@@ -81,18 +81,10 @@ void Factorial(int number)
 		j+=2;
         factThread[i].detach();
  	}
-
-    //factFuture[threads * 2 - 2] = factPromise[threads * 2 - 2].get_future();
-	//factThread[threads * 2 - 2] = std::thread(MergeResult, std::move(factPromise[threads * 2 - 2]), factFuture[j].get(), factFuture[j+1].get());
-
     mpz_class result = factFuture[threads * 2 - 2].get();
     timer.end();
-    //factThread[threads * 2 - 2].detach();
 
     //gmp_printf("%Zd\n", result);
-	
-    //for (int i = threads; i < threads * 2 - 1; i++) factThread[i].join();
-	//for (auto &t : factThread) t.join();
 }
 
 void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b) 
