@@ -17,6 +17,7 @@ namespace debug
             {
                 start_time = clock::now();
             }
+            // "\xC2\xB5" unicode char for micro symbol
             void end()
             {
                 auto end_time = clock::now();
