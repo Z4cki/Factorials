@@ -1,2 +1,3 @@
 bin/
 *.o
+c_cpp_properties.json
