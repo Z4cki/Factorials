@@ -1,99 +1,103 @@
-#include <chrono>
-#include <future>
 #include <iostream>
+#include <future>
+#include <thread>
 
 #include <gmpxx.h>
 #include "measure_time.h"
 
-#ifdef __MINGW32__
-typedef unsigned int uint;
+#ifndef THREADS_COUNT_DEFINED
+#define THREADS_COUNT_DEFINED
+int iKerne = std::thread::hardware_concurrency();
 #endif
 
-mpz_class Calculate(int start, int number, uint cores);
-
-template<typename T>
-bool IsFutureFinished(std::future<T> const& f);
-
-const uint core_count = std::thread::hardware_concurrency();
-const char* debug_msg = "Thread finished";
+void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end, int threads);
+void Factorial(int number);
+void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b);
 
 int main()
 {
-    int number;
-    std::cout << "Enter number: ";
+	int number;
+	std::cout << "Number: ";
+	std::cin >> number;
+	Factorial(number);
+	return 0;
+}
 
-    std::cin >> number;
-    std::cin.clear();
-    std::cin.ignore(INT_MAX, '\n');
+void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end, int threads)
+{
+    //debug::db_timer timer;
+	mpz_class a = 1;
+	for (int i = start; i <= end; i += threads) a *= i;
+	mpzPromise.set_value(a);
+    //timer.end("Finished split thread");
+}
 
-    // measure time
+void Factorial(int number)
+{
+	if (number <= 1) 
+	{
+		std::cout << "Is that input worth to start ANY threads?\n";
+		 return;
+	}
     debug::db_timer timer;
+	int threads; //512; //1024; //2048; //4096; // 8192; //16128;
+	switch (number)
+	{
+		case 100000: 
+		{
+			threads = 64;
+			break;
+		}
+		case 1000000: 
+		{
+			threads = 512;
+			break;
+		}
+		case 10000000: 
+		{
+			threads = 8192;
+			break;
+		}
+		case 100000000: 
+		{
+			threads = 64000;
+			break;
+		}
+		default: 
+		{
+			if (number < 100000) threads = std::thread::hardware_concurrency();
+			else threads = 32000;
+			if (threads > number) threads = number;
+			break;
+		}
+	}
 
-    std::future<mpz_class> futures[core_count];
-
-    for (int i = 0; i < core_count; i++)
-    {
-        futures[i] = std::async(std::launch::async, Calculate, i + 2, number, core_count);
-    }
-
-    // collect all futures
-    // not "blocking" the main thread by checking which future 
-    // finished and doing work with them
-    mpz_class result = 1;
-    {
-        int i = 0;
-        while (i < core_count)
-        {   
-            for (int j = 0; j < core_count; j++)
-            {
-                if(IsFutureFinished(futures[j]))
-                    result *= futures[j].get();
-                    futures[j] = {};
-                    i++;
-            }
-        }
-    }
-
-    //stop measuring time
+	std::promise<mpz_class> promisePool[threads * 2 - 1];
+	std::future<mpz_class>  futurePool[threads * 2 - 1];
+		
+	std::thread threadPool[threads * 2];
+	for (int i = 0; i < threads; i++)
+	{
+		futurePool[i] = promisePool[i].get_future();
+		threadPool[i] = std::thread(CalculateFactorial, std::move(promisePool[i]), i + 1, number, threads);
+        threadPool[i].detach();
+	}
+	
+    int j = 0;                      
+	for (int i = threads; i < threads * 2 - 1; i++)
+	{
+		futurePool[i] = promisePool[i].get_future();
+	    threadPool[i] = std::thread(MergeResult, std::move(promisePool[i]), futurePool[j].get(), futurePool[j+1].get());
+		j+=2;
+        threadPool[i].detach();
+ 	}
+    mpz_class result = futurePool[threads * 2 - 2].get();
     timer.end();
 
     //gmp_printf("%Zd\n", result);
-
-    return 0;
 }
 
-/**
- *  Function to multiply numbers starting with start, in steps of "cores".
- *  We split up the calculation onto different processing cores and 
- *  count upwards the same steps, but with different starting points to not 
- *  multiply any numbers twice.
- * 
- *  for example: (with 2 cores)
- * 
- *  Core 1: 1 * 3 * 5 * 7 ... <= number 
- *  Core 2:   2 * 4 * 6 * ... <= number
- *  .
- *  .
- *  .
- * 
- *  @param start    To split the calculation in different parts we start with
- *                  numbers on different cores.
- *  @param number   Number entered by user to calculate the factorial for.
- *  @param cores    The count of cores used to caclulate a result. Here to count up 
- *                  in the for()-loop to even out the load on the cores.
- */
-mpz_class Calculate(int start, int number, uint cores)
+void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b) 
 {
-    debug::db_timer timer;
-    mpz_class n = 1;
-    for (int i = start; i <= number; i+=cores) n *= i;
-    timer.end(debug_msg);
-    return n;
-}
-
-template<typename T>
-bool IsFutureFinished(std::future<T> const& f)
-{
-    if (!f.valid()) return false;
-    return f.wait_for(std::chrono::seconds(0)) == std::future_status::ready;
+	mpzPromise.set_value(a*b);
 }

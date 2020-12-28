@@ -1,3 +1,6 @@
+#ifndef MEASURE_TIME_H
+#define MEASURE_TIME_H
+
 #include <chrono>
 #include <iostream>
 #include <string>
@@ -35,3 +38,4 @@ namespace debug
             }
     };
 }
+#endif
