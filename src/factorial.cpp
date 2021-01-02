@@ -12,7 +12,7 @@ int iKerne = std::thread::hardware_concurrency();
 
 void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end, int threads);
 void Factorial(int number);
-void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b);
+void MergeResult(std::promise<mpz_class>&& mpzPromise, std::future<mpz_class>* a, std::future<mpz_class>* b);
 
 int main()
 {
@@ -36,8 +36,8 @@ void Factorial(int number)
 {
 	if (number <= 1) 
 	{
-		std::cout << "Is that input worth to start ANY threads?\n";
-		 return;
+		std::cout << "Is that input worth starting ANY threads?\n";
+		return;
 	}
     debug::db_timer timer;
 	int threads; //512; //1024; //2048; //4096; // 8192; //16128;
@@ -87,7 +87,7 @@ void Factorial(int number)
 	for (int i = threads; i < threads * 2 - 1; i++)
 	{
 		futurePool[i] = promisePool[i].get_future();
-	    threadPool[i] = std::thread(MergeResult, std::move(promisePool[i]), futurePool[j].get(), futurePool[j+1].get());
+	    threadPool[i] = std::thread(MergeResult, std::move(promisePool[i]), &futurePool[j], &futurePool[j+1]);
 		j+=2;
         threadPool[i].detach();
  	}
@@ -97,7 +97,7 @@ void Factorial(int number)
     //gmp_printf("%Zd\n", result);
 }
 
-void MergeResult(std::promise<mpz_class>&& mpzPromise, mpz_class a, mpz_class b) 
+void MergeResult(std::promise<mpz_class>&& mpzPromise, std::future<mpz_class>* a, std::future<mpz_class>* b) 
 {
-	mpzPromise.set_value(a*b);
+	mpzPromise.set_value(a->get() * b->get());
 }
