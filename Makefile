@@ -3,7 +3,8 @@ WINCPP=x86_64-w64-mingw32-g++-posix
 CFLAGS=-lpthread -lgmp -lgmpxx -std=c++17
 WINFLAGS=-static -I/usr/local/mingw32/include -L/usr/local/mingw32/lib
 
-all: factorial  #factorial.exe
+all: factorial  # not working, it doesn't clean up the 
+				# linux object files properly --> factorial.exe
 
 factorial: bin/factorial clean
 
@@ -22,18 +23,21 @@ bin/factorial.o: src/factorial.cpp src/measure_time.h
 	@if [ ! -d bin/ ] ; then mkdir bin && echo "created folder bin" ; fi
 	@$(CPP) -c -g src/factorial.cpp -o bin/factorial.o
 
-# compile win object file 
+# compile win object file
 bin/factorial.win.o: src/factorial.cpp src/measure_time.h
 	@if [ ! -d bin/ ] ; then mkdir bin && echo "created folder bin" ; fi
 	@$(WINCPP) -c -g src/factorial.cpp -o bin/factorial.win.o
 
+# remove object files
 clean: SHELL:=/bin/bash
 clean:
 	@rm -r bin/*.o
 
+# delete binary folder
 delete-bin:
 	@if [ -d bin/ ]  ; then rm -r bin/ ; fi
 	@echo removed all binaries
 
+# run the linux program
 run:
 	@cd bin/ ; ./factorial;
