@@ -5,12 +5,12 @@ Runs stable up to 100,000,000 for now.
 ## Currently updating this section
 
 ### TODO
-1. I added Windows support in the makefile, update on how to build the program will follow soon
+1. Added Windows support in the makefile, update on how to build the program will follow soon
 2. Improve computing algorithm
     - add multithreaded merging of intermediate results
 
 ### Build
-I currently work on a detailed descreption for compilation for Windows. 
+Currently working on a detailed descreption for compilation for Windows. 
 Compiling **ON** Windows is not possible at the moment.
 
 Requires GMP [GNU Multiple Precision Library](https://gmplib.org/ "GMP Homepage").  
