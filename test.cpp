@@ -15,8 +15,6 @@ int main(int argc, char* argv[])
         scanf("%ud", &num);
     }
 
-    int i = getFastestCoreCount(num);
-    printf("\n%d\n", i);
-
+    getFastestCoreCount(num);
     return 0;
 }

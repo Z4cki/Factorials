@@ -5,10 +5,11 @@
 
 #include "fast_factorial.hpp"
 
+/**
+ * @brief cli to 
+ */
 int getFastestCoreCount(const unsigned int num)
 {
-    double testTimes[coreArraySize];
-
     // Start measuring time
     auto start = std::chrono::_V2::high_resolution_clock::now();
 
@@ -19,9 +20,8 @@ int getFastestCoreCount(const unsigned int num)
 
         double timer;
         fastFactorial(num, coreCount, &timer);
-        testTimes[i] = timer;
 
-        printf("\tFinished test: %.2f ms (%.2fs)\n\n", timer, timer / 1000.0);
+        printf("\tFinished test: %.2f ms (%.2f s)\n\n", timer, timer / 1000.0);
     }
 
     // End time measurement
@@ -30,7 +30,7 @@ int getFastestCoreCount(const unsigned int num)
         end.time_since_epoch().count() - 
         start.time_since_epoch().count()) / 1000000.0;
 
-    printf("\nThe benchmark took %.2fms (%.2fs)\n", elapsed, elapsed / 1000.0);
+    printf("The benchmark took %.2f ms (%.2f s)\n", elapsed, elapsed / 1000.0);
 
     // TODO: return the fastest core count
     return 0;
