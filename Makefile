@@ -7,13 +7,25 @@ CFLAGS:=-g -std=c++17 -Wall -lpthread \
 SRC:=main.cpp \
 	fast_factorial.cpp
 
+BENCH:=test.cpp \
+	benchmark.cpp \
+	fast_factorial.cpp
+
 RM:=rm -rf
 
-all: factorial
+all: factorial benchmark
 
 factorial: $(SRC)
-	$(CPP) -o $@ $^ $(CFLAGS)
+	@echo Compiling $@ ..
+	@$(CPP) -o $@ $^ $(CFLAGS)
+	@echo "Done\n"
+
+benchmark: $(BENCH)
+	@echo Compiling $@ ..
+	@$(CPP) -o $@ $^ $(CFLAGS)
+	@echo "Done\n"
 
 clean:
+	$(RM) benchmark
 	$(RM) factorial
 	$(RM) *.o

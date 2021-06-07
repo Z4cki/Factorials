@@ -35,4 +35,4 @@ class timer
             else std::cout << msg << " " << elapsed_time / 1000.0F << " \xC2\xB5s ("  << elapsed_time / 1000000.0F << " ms)" << std::endl;
         }
 };
-#endif
+#endif /* measure_time.hpp */

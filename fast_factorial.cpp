@@ -1,4 +1,4 @@
-#include "fast_factorial.h"
+#include "fast_factorial.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -7,71 +7,73 @@
 /**
  * @brief Compute factorial
  * 
- * @param n number => !number
- * @param threadCount how many threads to be used
+ * @param num number => !number
+ * @param thread_count how many threads to be used
  * 
  * @return Status flag
  */
-int fastFactorial(const unsigned int n, const unsigned int threadCount)
+int fastFactorial(const unsigned int num,
+    const unsigned int thread_count, double* timer)
 {
     // No factorial to compute
-    if (n == 0) 
+    if (num == 0) 
     {
         printf("Nothing to do.");
         return -1;
     }
     
     // Start time measurement
-    auto startTime = std::chrono::_V2::high_resolution_clock::now();
+    auto start_time = std::chrono::_V2::high_resolution_clock::now();
 
-    const unsigned int poolSize = threadCount * 2 - 1;
+    const unsigned int pool_size = thread_count * 2 - 1;
 
     // Collection of promises and futures
-    mpz_promise     promisePool[poolSize];
-    mpz_future      futurePool[poolSize];
-    std::thread     threadPool[poolSize];
+    mpz_promise     promise_pool[pool_size];
+    mpz_future      future_pool[pool_size];
+    std::thread     thread_pool[pool_size];
 
     // Spread calculation on different threads
-    for (unsigned int i = 0; i < threadCount; i++)
+    for (unsigned int i = 0; i < thread_count; i++)
     {
         // Map futures <-> promises in the pools
-        futurePool[i] = promisePool[i].get_future();
+        future_pool[i] = promise_pool[i].get_future();
 
         // Launch thread
-        threadPool[i] = std::thread(computeSection, 
-            std::move(promisePool[i]), i + 1, n, threadCount);
+        thread_pool[i] = std::thread(computeSection, 
+            std::move(promise_pool[i]), i + 1, num, thread_count);
         
         // Release thread (get result via future)
-        threadPool[i].detach();
+        thread_pool[i].detach();
     }
 
     // Merge results
-    for (unsigned int i = threadCount, j = 0; i < poolSize; i++, j+=2)
+    for (unsigned int i = thread_count, j = 0; i < pool_size; i++, j+=2)
     {
         // Map futures : promises in the pools
-        futurePool[i] = promisePool[i].get_future();
+        future_pool[i] = promise_pool[i].get_future();
 
         // Launch thread
-        threadPool[i] = std::thread(mergeResult,
-            std::move(promisePool[i]), &futurePool[j], &futurePool[j + 1]);
+        thread_pool[i] = std::thread(mergeResult,
+            std::move(promise_pool[i]), &future_pool[j], &future_pool[j + 1]);
 
         // Release thread (get result via future)
-        threadPool[i].detach();
+        thread_pool[i].detach();
     }
 
     // Copy result
-    auto result = futurePool[poolSize - 1].get();
+    auto result = future_pool[pool_size - 1].get();
 
     // Stop timer
-    auto endTime = std::chrono::_V2::high_resolution_clock::now();
-    auto elapsed = (
-            endTime.time_since_epoch().count() - 
-            startTime.time_since_epoch().count()
+    auto end_time = std::chrono::_V2::high_resolution_clock::now();
+    auto elapsed_ms = (
+            end_time.time_since_epoch().count() - 
+            start_time.time_since_epoch().count()
         ) / 1000000.0;
-    printf("Calculation took %f ms.\n", elapsed);
+    
+    *timer = elapsed_ms;
 
-    #ifdef PRINT_FACTORIAL
     // Print result
+    #ifdef PRINT_FACTORIAL
     gmp_printf("%Zd\n", result);
     #endif
 

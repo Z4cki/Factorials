@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "fast_factorial.hpp"
+#include "benchmark.hpp"
 
 int main(int argc, char* argv[])
 {
     unsigned int num;
-    if (argc == 2) // Get command line input ..
+    if (argc == 2) // Get command line input..
     {
         num = std::stoi(argv[1]);
     }
@@ -14,8 +14,9 @@ int main(int argc, char* argv[])
         printf("Enter number: ");
         scanf("%ud", &num);
     }
-    double timer;
-    int status = fastFactorial(num, 1024, &timer);
-    printf("Elapsed time: %.2f ms\n", timer);
-    return status;
+
+    int i = getFastestCoreCount(num);
+    printf("\n%d\n", i);
+
+    return 0;
 }

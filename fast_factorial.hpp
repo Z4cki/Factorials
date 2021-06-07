@@ -8,7 +8,8 @@
 typedef std::future<mpz_class> mpz_future;
 typedef std::promise<mpz_class> mpz_promise;
 
-int fastFactorial(const unsigned int n, const unsigned int threadCount);
+int fastFactorial(const unsigned int num,
+    const unsigned int thread_count, double* timer);
 
 void computeSection(mpz_promise&& promise, const int start,
     const int end, const int size);
@@ -16,4 +17,4 @@ void computeSection(mpz_promise&& promise, const int start,
 void mergeResult(mpz_promise&& promise, mpz_future* first, 
     mpz_future* second);
 
-#endif /* fast_factorial.h */
+#endif /* fast_factorial.hpp */
