@@ -5,16 +5,16 @@
 #include <gmpxx.h>
 #include "measure_time.h"
 
-#ifndef THREADS_COUNT_DEFINED
-#define THREADS_COUNT_DEFINED
-int iKerne = std::thread::hardware_concurrency();
+#ifndef THREAD_COUNT
+#define THREAD_COUNT
+const unsigned int physicalThreads = std::thread::hardware_concurrency();
 #endif
 
 void CalculateFactorial(std::promise<mpz_class>&& mpzPromise, int start, int end, int threads);
 void Factorial(int number);
 void MergeResult(std::promise<mpz_class>&& mpzPromise, std::future<mpz_class>* a, std::future<mpz_class>* b);
 
-int main()
+int main1()
 {
 	int number;
 	std::cout << "Number: ";
@@ -36,7 +36,7 @@ void Factorial(int number)
 {
 	if (number <= 1) 
 	{
-		std::cout << "Is that input worth starting ANY threads?\n";
+		std::cout << "Is that worth starting ANY threads?\n";
 		return;
 	}
     debug::db_timer timer;
@@ -65,7 +65,7 @@ void Factorial(int number)
 		}
 		default: 
 		{
-			if (number < 100000) threads = std::thread::hardware_concurrency();
+			if (number < 100000) threads = physicalThreads;
 			else threads = 32000;
 			if (threads > number) threads = number;
 			break;

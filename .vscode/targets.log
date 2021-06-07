@@ -1,0 +1,344 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Jun  7 01:35:57 2021
+
+# Variables
+
+# environment
+JAVA_HOME = /usr/lib/jvm/java-11-openjdk-amd64/
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# makefile (from 'Makefile', line 7)
+SRC := main.cpp fast_factorial.cpp log.cpp
+# environment
+GNOME_SHELL_SESSION_MODE = ubuntu
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# environment
+GJS_DEBUG_OUTPUT = stderr
+ 
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-3c0d4b89-ad16-40b7-9144-f41fbef5b872.sock
+# environment
+LC_NAME = de_DE.UTF-8
+# environment
+LC_NUMERIC = de_DE.UTF-8
+# environment
+VSCODE_CWD = /home/me
+# environment
+LC_ADDRESS = de_DE.UTF-8
+# environment
+LIBVIRT_DEFAULT_URI = qemu:///system
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/me/Documents/C++/Factorials
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.TUKN40
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# makefile
+CURDIR := /home/me/Documents/C++/Factorials
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# environment
+WAYLAND_DISPLAY = wayland-0
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=59ac6009-118b-4c46-8a20-cebf0183a0a8&iid=59ac6009-118b-4c46-8a20-cebf0183a0a8&sid=59ac6009-118b-4c46-8a20-cebf0183a0a8","uploadToServer":true}
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 4136
+# environment
+XDG_SESSION_TYPE = wayland
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/me:@/tmp/.ICE-unix/2476,unix/me:/tmp/.ICE-unix/2476
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+BREAKPAD_DUMP_LOCATION = /home/me/.config/Code/exthost Crash Reports
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 0
+# environment
+MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /home/me/.local/bin:/home/me/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/gradle/gradle-6.8.3/bin:/usr/local/games:/snap/bin:/usr/lib/jvm/java-15-openjdk-amd64/bin:/snap/bin:/usr/lib/jvm/java-11-openjdk-amd64//bin
+# default
+MAKEFILES := 
+# environment
+LANGUAGE = en_US:en
+# environment
+LC_MONETARY = de_DE.UTF-8
+# automatic
+^F = $(notdir $^)
+# environment
+LC_TIME = de_DE.UTF-8
+# environment
+INVOCATION_ID = 5072ca7b9b4d433e8696087546186aca
+# makefile (from 'Makefile', line 1)
+CPP := g++
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+USERNAME = me
+# environment
+GNOME_SETUP_DISPLAY = :1
+# environment
+LC_TELEPHONE = de_DE.UTF-8
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# automatic
+?F = $(notdir $?)
+# environment
+XDG_CURRENT_DESKTOP = Unity
+# environment
+LS_COLORS = 
+# automatic
++F = $(notdir $+)
+# environment
+DESKTOP_SESSION = ubuntu
+# makefile (from 'Makefile', line 2)
+PKGCONFIG := /usr/bin/pkg-config
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = me
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from 'Makefile', line 11)
+RM := rm -rf
+# environment
+DISPLAY = :0
+# environment
+USER = me
+# environment
+GTK_MODULES = gail:atk-bridge
+# default
+MAKE_VERSION := 4.3
+# 'override' directive
+.SHELLSTATUS := 0
+# environment
+MANAGERPID = 1951
+# environment
+LC_MEASUREMENT = de_DE.UTF-8
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4136
+# environment
+VSCODE_NODE_CACHED_DATA_DIR = /home/me/.config/Code/CachedData/054a9295330880ed74ceaedda236253b4f39a335
+# environment
+_ = /usr/share/code/code
+# environment
+LC_PAPER = de_DE.UTF-8
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# makefile (from 'Makefile', line 3)
+CFLAGS := -g -std=c++17 -Wall -lpthread -I/usr/local/include -L/usr/local/lib -lgmpxx -lgmp
+# environment
+JOURNAL_STREAM = 8:45193
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+HOME = /home/me
+# environment
+QT_IM_MODULE = ibus
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-3ec4b037-1.56.2-main.sock
+# environment
+IM_CONFIG_PHASE = 1
+# environment
+PAPERSIZE = a4
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+GDMSESSION = ubuntu
+# environment
+LC_IDENTIFICATION = de_DE.UTF-8
+# variable set hash-table stats:
+# Load=119/1024=12%, Rehash=0, Collisions=8/163=5%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 2098, inode 4326940): 17 files, no impossibilities.
+
+# 17 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+fast_factorial.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2021-06-07 01:17:06.054709522
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-06-07 01:35:32.818211748
+#  File has been updated.
+#  Successfully updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 19):
+	$(RM) factorial
+	$(RM) *.o
+
+factorial: main.cpp fast_factorial.cpp log.cpp
+#  Implicit rule search has not been done.
+#  Last modified 2021-06-07 01:35:48.742403515
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 16):
+	$(CPP) -o $@ $^ $(CFLAGS)
+
+# Not a target:
+log.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2021-06-07 00:24:54.174628948
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: factorial
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+main.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2021-06-07 00:29:42.185765422
+#  File has been updated.
+#  Successfully updated.
+
+# files hash-table stats:
+# Load=9/1024=1%, Rehash=0, Collisions=0/25=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 23 / storage = 243 B / avg = 10 B
+# current buf: size = 8162 B / used = 243 B / count = 23 / avg = 10 B
+
+# strcache performance: lookups = 36 / hit rate = 36%
+# hash-table stats:
+# Load=23/8192=0%, Rehash=0, Collisions=0/36=0%
+# Finished Make data base on Mon Jun  7 01:35:57 2021
+
+ 

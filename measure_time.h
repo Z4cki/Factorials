@@ -1,5 +1,5 @@
-#ifndef MEASURE_TIME_H
-#define MEASURE_TIME_H
+#ifndef MEASURE_TIME_H_
+#define MEASURE_TIME_H_
 
 #include <chrono>
 #include <iostream>

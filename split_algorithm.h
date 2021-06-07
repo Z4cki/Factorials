@@ -1,13 +1,13 @@
-#ifndef SPLIT_ALGORITHM_H
-#define SPLIT_ALGORITHM_H
+#ifndef SPLIT_ALGORITHM_H_
+#define SPLIT_ALGORITHM_H_
 
 #include <future>
 #include <thread>
 
 #include <gmpxx.h>
 
-#ifndef THREADS_COUNT_DEFINED
-#define THREADS_COUNT_DEFINED
+#ifndef THREAD_COUNT
+#define THREAD_COUNT
 int threads = std::thread::hardware_concurrency();
 int iKerne = 8;
 

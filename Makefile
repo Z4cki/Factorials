@@ -1,43 +1,19 @@
-CPP=g++
-WINCPP=x86_64-w64-mingw32-g++-posix
-CFLAGS=-lpthread -lgmp -lgmpxx -std=c++17
-WINFLAGS=-static -I/usr/local/mingw32/include -L/usr/local/mingw32/lib
+CPP:=g++
+PKGCONFIG:=$(shell which pkg-config)
+CFLAGS:=-g -std=c++17 -Wall -lpthread \
+		$(shell $(PKGCONFIG) --cflags gmpxx) \
+		$(shell $(PKGCONFIG) --libs gmpxx)
 
-all: factorial  # not working, it doesn't clean up the 
-				# linux object files properly --> factorial.exe
+SRC:=main.cpp \
+	fast_factorial.cpp
 
-factorial: bin/factorial clean
+RM:=rm -rf
 
-factorial.exe: bin/factorial.exe clean
+all: factorial
 
-# create linux executable 
-bin/factorial: bin/factorial.o
-	@$(CPP) bin/factorial.o -o bin/factorial $(CFLAGS)
+factorial: $(SRC)
+	$(CPP) -o $@ $^ $(CFLAGS)
 
-# create win executable 
-bin/factorial.exe: bin/factorial.win.o
-	@$(WINCPP) $(WINFLAGS) bin/factorial.win.o -o bin/factorial.exe $(CFLAGS)
-
-# compile linux object file 
-bin/factorial.o: src/factorial.cpp src/measure_time.h
-	@if [ ! -d bin/ ] ; then mkdir bin && echo "created folder bin" ; fi
-	@$(CPP) -c -g src/factorial.cpp -o bin/factorial.o
-
-# compile win object file
-bin/factorial.win.o: src/factorial.cpp src/measure_time.h
-	@if [ ! -d bin/ ] ; then mkdir bin && echo "created folder bin" ; fi
-	@$(WINCPP) -c -g src/factorial.cpp -o bin/factorial.win.o
-
-# remove object files
-clean: SHELL:=/bin/bash
 clean:
-	@rm -r bin/*.o
-
-# delete binary folder
-delete-bin:
-	@if [ -d bin/ ]  ; then rm -r bin/ ; fi
-	@echo removed all binaries
-
-# run the linux program
-run:
-	@cd bin/ ; ./factorial;
+	$(RM) factorial
+	$(RM) *.o
