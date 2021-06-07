@@ -36,10 +36,10 @@ void Factorial(int number)
 {
 	if (number <= 1) 
 	{
-		std::cout << "Is that worth starting ANY threads?\n";
+		std::cout << "Nothing to do.\n";
 		return;
 	}
-    debug::db_timer timer;
+    timer timer;
 	int threads; //512; //1024; //2048; //4096; // 8192; //16128;
 	switch (number)
 	{
@@ -73,7 +73,7 @@ void Factorial(int number)
 	}
 
 	std::promise<mpz_class> promisePool[threads * 2 - 1];
-	std::future<mpz_class>  futurePool[threads * 2 - 1];
+	std::future <mpz_class> futurePool [threads * 2 - 1];
 		
 	std::thread threadPool[threads * 2];
 	for (int i = 0; i < threads; i++)
@@ -92,7 +92,7 @@ void Factorial(int number)
         threadPool[i].detach();
  	}
     mpz_class result = futurePool[threads * 2 - 2].get();
-    timer.end();
+    timer.stop();
 
     //gmp_printf("%Zd\n", result);
 }
