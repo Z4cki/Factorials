@@ -1,4 +1,4 @@
-#include "fast_factorial.hpp"
+#include "factorial_fast.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -7,10 +7,11 @@
 /**
  * @brief Compute factorial
  * 
- * @param num number => !number
- * @param thread_count how many threads to be used
+ * @param num !number
+ * @param thread_count count of threads to be used
+ * @param timer variable to store the elapsed time
  * 
- * @return Status flag
+ * @return status of process
  */
 int fastFactorial(const unsigned int num,
     const unsigned int thread_count, double* timer)

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "fast_factorial.hpp"
+#include "factorial_fast.hpp"
 
 int main(int argc, char* argv[])
 {

@@ -1,5 +1,5 @@
-#ifndef FAST_FACTORIAL_H_
-#define FAST_FACTORIAL_H_
+#ifndef FACTORIAL_FAST_H_
+#define FACTORIAL_FAST_H_
 
 #include <future>
 
@@ -17,4 +17,4 @@ void computeSection(mpz_promise&& promise, const int start,
 void mergeResult(mpz_promise&& promise, mpz_future* first, 
     mpz_future* second);
 
-#endif /* fast_factorial.hpp */
+#endif /* factorial_fast.hpp */

@@ -3,7 +3,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "fast_factorial.hpp"
+#include "factorial_fast.hpp"
 
 /**
  * @brief cli to 
